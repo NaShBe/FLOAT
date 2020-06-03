@@ -112,7 +112,7 @@ button:active
     color: rgb(255, 200, 243);
     background: url("../resources/button_pressed.png");
     background-repeat: no-repeat;
-    height: 200%;
+    height: 80px;
     width: fit-content;
     background-size: 100% 100%;
 }
