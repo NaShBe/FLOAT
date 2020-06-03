@@ -44,6 +44,12 @@ h2
     font-family: monospace;
     font-size: 30px;
     line-height: 0px;
+    word-spacing: 0px;
+}
+
+div
+{
+    margin: auto;
 }
 
 .button_group
@@ -61,7 +67,7 @@ h2
     max-width: 1000px;
     margin: auto;
     padding: 2%;
-    margin-top: 50px;
+    margin-top: 3%;
     overflow: hidden;
     zoom: 1;
     box-shadow: 0px 6px 5px rgba(0, 0, 0, 0.3);
@@ -77,8 +83,8 @@ h2
 
 .linkicon
 {
-    height: 150px;
-    width: fit-content;
+    min-height: 150px;
+    width: auto;
     display: block;
     margin: auto;
     padding: 10px;
@@ -106,7 +112,7 @@ button:active
     color: rgb(255, 200, 243);
     background: url("../resources/button_pressed.png");
     background-repeat: no-repeat;
-    height: 80px;
+    height: 200%;
     width: fit-content;
     background-size: 100% 100%;
 }
