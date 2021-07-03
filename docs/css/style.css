@@ -60,6 +60,11 @@ div
     padding: 20px;
 }
 
+.button_group form
+{
+    display: inline;
+}
+
 .noteback
 {
     background-color: white;
