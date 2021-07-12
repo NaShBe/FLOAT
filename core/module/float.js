@@ -1,5 +1,6 @@
 import { Decimal } from "./decimal.js";
 
+
 export const FloatTypes =
 {
     IEEE_HALF_PRECISION: "float16",

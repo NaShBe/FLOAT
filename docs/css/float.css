@@ -1,0 +1,80 @@
+#floatpoint
+{
+    width: fit-content;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#result
+{
+    font-size: 600%;
+    margin:0%;
+}
+
+#hex
+{
+    text-align: right;
+    font-size: medium;
+    margin: 0%;
+}
+#bin
+{
+    text-align: right;
+    font-size: small;
+    margin: 0%;
+}
+
+.dmantissa
+{
+    color:#E55;
+}
+
+.dexponent
+{
+    color:#55E;
+}
+
+.dsign
+{
+    color:#5E5;
+}
+
+.entries
+{
+    display: inline-flex;
+    height: fit-content;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#userinput
+{
+    margin: 5%;
+}
+
+.details
+{
+    display: block;
+}
+
+.details p
+{
+    display: block;
+    font-size: small;
+}
+
+ul
+{
+    list-style: none;
+}
+
+main
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    color: #555;
+    text-shadow: 0.15rem 0.15rem rgba(17, 17, 17, 0.120);
+}
