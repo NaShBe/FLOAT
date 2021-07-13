@@ -15,65 +15,78 @@
         <title>IEEE 754 Floating Point Playground</title>
     </head>
     <body>
-        <main>
-            <h1>FLOAT</h1>
-            <div id="floatpoint" class="entries">
-                <label for="encoding">Encoding</label>
-                <select name="encoding" id="encoding">
-                    <optgroup label="IEEE 754 Floating Point">
-                        <option value="IEEE754B32">Single-Precision IEEE754 Float (32-bit)</option>
-                        <option value="IEEE754B64">Double-Precision IEEE754 Float (64-bit)</option>
-                        <option value="IEEE754B128">Quad-Precision IEEE754 Float (128-bit)</option>
-                        <option value="IEEE754B128">Octo-Precision IEEE754 Float (256-bit)</option>
-                    </optgroup>
-                    <optgroup label="Minifloat">
-                        <option value="MINIB8">8-bit minifloat</option>
-                        <option value="MINIB16">bfloat16 minifloat</option>
-                    </optgroup>
-                </select>
-                <p id="result">
-                    <span id ="sigsign" class="dsign">+</span
-                    ><span id="sigmant" class="dmantissa">1.00000</span
-                    >x2<sup><span id="sigexp" class="dexponent">0</span></sup>
+        <noscript>
+            <img id="noscriptbg" src="../resources/float/background.png">
+            <main>
+                <img id="noscripticon" src="../resources/float/icon.svg">
+                <p>
+                    FLOAT requires JavaScript to function.
+                    Please enable JavaScript to use FLOAT.
                 </p>
-                <p id="hex">
-                    34DF3434<sub>16</sub>
-                </p>
-                <p id="bin">
-                    (<span id="binsign" class="dsign">1</span>
-                    <span id="binexp" class="dexponent">1010</span>
-                    <span id="binmant" class="dmantissa">110</span><sub>2</sub>)
-                </p>
-                <div class="details">
-                    <p>Sign: x</p>
-                    <p>Mantissa: x</p>
-                    <p>Biased Exponent: x</p>
-                    <p>Exponent: x</p>
-                    <p>UFL: x</p>
-                    <p>OFL: x</p>
-                    <p>ULP: x</p>
-                    <p>Relative Error: x</p>
-                    <p>Machine Epsilon: x</p>
-                </div>
-            </div>
-            <div id="userinput" class="entries">
-                <form onsubmit="return false;">
-                    <label>
-                        Entry
-                    </label>
-                    <div id="number">
-                        <div id="digits">
-                            <input id = "dinput" type="text">
-                        </div>
-                        <div id="radix">
-                            <input id="rinput" type="tel" maxlength="2" placeholder="2">
-                        </div>
+            </main>
+        </noscript>
+        <div id="jsEnabled">
+
+            <main>
+                <h1>FLOAT</h1>
+                <div id="floatpoint" class="entries">
+                    <label for="encoding">Encoding</label>
+                    <select name="encoding" id="encoding">
+                        <optgroup label="IEEE 754 Floating Point">
+                            <option value="IEEE754B32">Single-Precision IEEE754 Float (32-bit)</option>
+                            <option value="IEEE754B64">Double-Precision IEEE754 Float (64-bit)</option>
+                            <option value="IEEE754B128">Quad-Precision IEEE754 Float (128-bit)</option>
+                            <option value="IEEE754B128">Octo-Precision IEEE754 Float (256-bit)</option>
+                        </optgroup>
+                        <optgroup label="Minifloat">
+                            <option value="MINIB8">8-bit minifloat</option>
+                            <option value="MINIB16">bfloat16 minifloat</option>
+                        </optgroup>
+                    </select>
+                    <p id="result">
+                        <span id ="sigsign" class="dsign">+</span
+                        ><span id="sigmant" class="dmantissa">1.00000</span
+                        >x2<sup><span id="sigexp" class="dexponent">0</span></sup>
+                    </p>
+                    <p id="hex">
+                        34DF3434<sub>16</sub>
+                    </p>
+                    <p id="bin">
+                        (<span id="binsign" class="dsign">1</span>
+                        <span id="binexp" class="dexponent">1010</span>
+                        <span id="binmant" class="dmantissa">110</span><sub>2</sub>)
+                    </p>
+                    <div class="details">
+                        <p>Sign: x</p>
+                        <p>Mantissa: x</p>
+                        <p>Biased Exponent: x</p>
+                        <p>Exponent: x</p>
+                        <p>UFL: x</p>
+                        <p>OFL: x</p>
+                        <p>ULP: x</p>
+                        <p>Relative Error: x</p>
+                        <p>Machine Epsilon: x</p>
                     </div>
-                </form>
-            </div>
-        </main>
+                </div>
+                <div id="userinput" class="entries">
+                    <form onsubmit="return false;">
+                        <label>
+                            Entry
+                        </label>
+                        <div id="number">
+                            <div id="digits">
+                                <input id = "dinput" type="text">
+                            </div>
+                            <div id="radix">
+                                <input id="rinput" type="tel" maxlength="2" placeholder="2">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
     </body>
-    <script type="module" src="../../core/module/decimal.js"></script>
+    <script src="../../core/module/decimal.js"></script>
     <script type="module" src="../../core/module/float.js"></script>
-    <script src="../../core/module/main.js"></script>
+    <script type="module" src="../../core/module/main.js"></script>
 </html>

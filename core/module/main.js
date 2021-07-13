@@ -1,4 +1,4 @@
-//import { FloatingPoint, FloatTypes } from "./float.js";
+import { FloatingPoint, FloatTypes } from "./float.js";
 
 const MIN_RADIX = 1;
 const MAX_RADIX = 36;
@@ -70,14 +70,17 @@ function validateDigitsInput()
         validateDigitsInput.previousValidDigits = "";
     }
     
-    digitInput.value = digitInput.value.toUpperCase().match(validInput);
+    digitInput.value = digitInput.value.match(validInput).join('');
 }
+document.getElementById("jsEnabled").style.display = "block"; // show interface if js enabled
 
-currentEntry = 0;
-floatInput = 0;
+var currentEntry = 0;
+var floatInput = 0;
 
-digitInput = document.getElementById("dinput");
-radixInput = document.getElementById("rinput");
+var calcFloat = new FloatingPoint(1000, FloatTypes["IEEE_SINGLE_PRECISION"]);
+
+var digitInput = document.getElementById("dinput");
+var radixInput = document.getElementById("rinput");
 radixInput.defaultValue = "2";
 digitInput.defaultValue = "10010100";
 radixInput.addEventListener("input", validateRadixInput);

@@ -78,3 +78,14 @@ main
     color: #555;
     text-shadow: 0.15rem 0.15rem rgba(17, 17, 17, 0.120);
 }
+
+noscript p
+{
+    background-color: azure;
+    box-shadow: rgba(17, 17, 17, 0.120);
+}
+
+#jsEnabled
+{
+    display: none;
+}
