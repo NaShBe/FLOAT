@@ -57,6 +57,7 @@
 .details
 {
     display: block;
+    columns: 2;
 }
 
 .details p

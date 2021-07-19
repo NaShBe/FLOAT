@@ -3,54 +3,11 @@ import { FloatingPoint, FloatTypes } from "./float.js";
 const MIN_RADIX = 1;
 const MAX_RADIX = 36;
 
-function validateRadixInput()
-{
-    /*
-        This function dynamically enforces valid input for the radix.
-        Because the radix input is checked in its whole, the event
-        does not need to be checked. Any invalid state for the radix
-        will revert the radix back to the previous valid input.
+/*
+    Input Validation
+*/
 
-        Valid input includes:
-            * an empty string
-            * any number between the 1 and the maximum radix 36 (0-Z digits)
-    */
-
-    if (typeof validateRadixInput.previousValidRadix == "undefined")
-    {
-        validateRadixInput.previousValidRadix = "";
-    }
-
-    if(isNaN(radixInput.value))
-    {
-        if (radixInput.value == null || radixInput.value == "")
-        {
-            radixInput.value = "";
-        }
-        else
-        {
-            radixInput.value = validateRadixInput.previousValidRadix;
-        }
-    }
-    
-    else if (radixInput.value > MAX_RADIX)
-    {
-        radixInput.value = MAX_RADIX;
-    }
-    
-    else if (radixInput.value < MIN_RADIX)
-    {
-        radixInput.value = "";
-    }
-
-    else
-    {
-        radixInput.value = parseInt(radixInput.value);
-    }
-    validateRadixInput.previousValidRadix = radixInput.value;
-}
-
-function validateDigitsInput()
+function validateDigitsInput(e)
 {
     const validInput = /(^(\+|-)?|^[a-z0-9]*)[a-z0-9]*\.?([a-z0-9]*)|([a-z0-9]+)/gi;
     /*
@@ -69,9 +26,25 @@ function validateDigitsInput()
     {
         validateDigitsInput.previousValidDigits = "";
     }
-    
+    var target = e.target;
+    var position = target.selectionStart;
     digitInput.value = digitInput.value.match(validInput).join('');
+    target.selectionEnd = position;
 }
+
+/*
+    Float Update
+*/
+function updateFloatRepresentation(value)
+{
+
+}
+
+function updateFloat(value)
+{
+
+}
+
 document.getElementById("jsEnabled").style.display = "block"; // show interface if js enabled
 
 var currentEntry = 0;
@@ -80,8 +53,5 @@ var floatInput = 0;
 var calcFloat = new FloatingPoint(1000, FloatTypes["IEEE_SINGLE_PRECISION"]);
 
 var digitInput = document.getElementById("dinput");
-var radixInput = document.getElementById("rinput");
-radixInput.defaultValue = "2";
 digitInput.defaultValue = "10010100";
-radixInput.addEventListener("input", validateRadixInput);
 digitInput.addEventListener("input", validateDigitsInput);

@@ -26,7 +26,6 @@
             </main>
         </noscript>
         <div id="jsEnabled">
-
             <main>
                 <h1>FLOAT</h1>
                 <div id="floatpoint" class="entries">
@@ -44,9 +43,9 @@
                         </optgroup>
                     </select>
                     <p id="result">
-                        <span id ="sigsign" class="dsign">+</span
-                        ><span id="sigmant" class="dmantissa">1.00000</span
-                        >x2<sup><span id="sigexp" class="dexponent">0</span></sup>
+                        <span id ="sigsign" class="dsign" contenteditable="true">+</span
+                        ><span id="sigmant" class="dmantissa" contenteditable="true">1.00000</span
+                        >x2<sup><span id="sigexp" class="dexponent" contenteditable="true">0</span></sup>
                     </p>
                     <p id="hex">
                         34DF3434<sub>16</sub>
@@ -56,6 +55,16 @@
                         <span id="binexp" class="dexponent">1010</span>
                         <span id="binmant" class="dmantissa">110</span><sub>2</sub>)
                     </p>
+                    <div id="userinput" class="entries">
+                        <form onsubmit="return false;">
+                            <label>
+                                Entry
+                            </label>
+                            <div id="number">
+                                <input id = "dinput" type="text">
+                            </div>
+                        </form>
+                    </div>
                     <div class="details">
                         <p>Sign: x</p>
                         <p>Mantissa: x</p>
@@ -67,21 +76,6 @@
                         <p>Relative Error: x</p>
                         <p>Machine Epsilon: x</p>
                     </div>
-                </div>
-                <div id="userinput" class="entries">
-                    <form onsubmit="return false;">
-                        <label>
-                            Entry
-                        </label>
-                        <div id="number">
-                            <div id="digits">
-                                <input id = "dinput" type="text">
-                            </div>
-                            <div id="radix">
-                                <input id="rinput" type="tel" maxlength="2" placeholder="2">
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </main>
         </div>
