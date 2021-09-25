@@ -1,4 +1,4 @@
-import { FloatingPoint, FloatTypes } from "./float.js";
+import { FloatingPoint, FloatTypes, ValueChangeType} from "./float.js";
 
 const MIN_RADIX = 1;
 const MAX_RADIX = 36;
@@ -6,6 +6,27 @@ const MAX_RADIX = 36;
 /*
     Input Validation
 */
+
+function flipSign()
+{
+    if (this.innerHTML === "+")
+    {
+        this.innerHTML = "-";
+    }
+    else
+    {
+        this.innerHTML = "+";
+    }
+}
+
+function validateFloatInput(e)
+{
+    //const validInput = /[0-9]*/gi;
+    var target = e.target;
+    var position = target.selectionStart;
+    //this.innerHTML = this.innerHTML.match(validInput).join('');
+    target.selectionEnd = position;
+}
 
 function validateDigitsInput(e)
 {
@@ -35,23 +56,45 @@ function validateDigitsInput(e)
 /*
     Float Update
 */
+
 function updateFloatRepresentation(value)
 {
 
 }
 
-function updateFloat(value)
+function updateFloatFromSciNot()
 {
-
+    calcFloat = new FloatingPoint(signInput.innerHTML, "1." + mantissaInput.innerHTML, exponentInput.innerHTML, FloatTypes["IEEE_SINGLE_PRECISION"]);
+    digitInput.value = calcFloat.value;
+    if (calcFloat.sign.toString() == "NaN")
+    {
+        signOutput.innerHTML = "N/A";
+    }
+    else
+    {
+        signOutput.innerHTML = calcFloat.sign;
+    }
 }
 
 document.getElementById("jsEnabled").style.display = "block"; // show interface if js enabled
 
-var currentEntry = 0;
-var floatInput = 0;
+var signInput = document.getElementById("sigsign");
+var mantissaInput = document.getElementById("sigmant");
+var exponentInput = document.getElementById("sigexp");
+var formatInput = document.getElementById("encoding");
 
-var calcFloat = new FloatingPoint(1000, FloatTypes["IEEE_SINGLE_PRECISION"]);
+var signOutput = document.getElementById("signout");
+
+signInput.addEventListener("click", flipSign);
+signInput.addEventListener("click", updateFloatFromSciNot);
+mantissaInput.addEventListener("input", validateFloatInput);
+mantissaInput.addEventListener("input", updateFloatFromSciNot);
+exponentInput.addEventListener("input", validateFloatInput);
+exponentInput.addEventListener("input", updateFloatFromSciNot);
 
 var digitInput = document.getElementById("dinput");
-digitInput.defaultValue = "10010100";
+
+var calcFloat;
+
+updateFloatFromSciNot();
 digitInput.addEventListener("input", validateDigitsInput);

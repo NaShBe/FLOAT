@@ -1,208 +1,120 @@
 import Decimal from "./decimal.mjs";
 
+export const ValueChangeType =
+{
+    Raw: "raw-bin-hex",
+    Value: "value"
+}
+
 export const FloatTypes =
 {
-    IEEE_HALF_PRECISION: "float16",
-    IEEE_SINGLE_PRECISION: "float32",
-    IEEE_DOUBLE_PRECISION: "float64",
-    IEEE_QUADRUPLE_PRECISION: "float128",
-    IEEE_OCTUPLE_PRECISION: "float256"
+    IEEE_HALF_PRECISION: {name: "float16", mantRange: 10, expRang: 5, totalRange: 16, bias: 0xF},
+    IEEE_SINGLE_PRECISION: {name: "float32", mantRange: 23, expRang: 8, totalRange: 32, bias: 0x7F},
+    IEEE_DOUBLE_PRECISION: {name: "float64", mantRange: 52, expRang: 11, totalRange: 64, bias: 0x3FF},
+    IEEE_QUADRUPLE_PRECISION: {name: "float128", mantRange: 112, expRang: 15, totalRange: 128, bias: 0x3FFF},
+    IEEE_OCTUPLE_PRECISION: {name: "float256", mantRange: 236, expRang: 19, totalRange: 256, bias: 0x3FFFF}
+}
+
+class BaseNumber
+{
+    // might be used to implement shared functionality of FloatingPoint, FixedPoint, and DecimalFloatingPoint
 }
 
 export class FloatingPoint
 {
-    constructor(number, floatType)
+    constructor(sign, mant, exp, floatType)
     {
+        this.format = {};
+
         try
         {
-            this.raw = Decimal(number);
+            if (sign == "-")
+            {
+                this.sign = new Decimal("-1");
+            }
+            else
+            {
+                this.sign = new Decimal("1");
+            }
+            this.format = floatType;
+            this.mant = new Decimal(mant);
+            this.exp = new Decimal(exp);
         }
         catch(err)
         {
-            this.raw = Decimal("NaN");
+            this.sign = Decimal("NaN");
+            this.mant = Decimal("NaN");
+            this.exp = Decimal("NaN");
+            this.format = FloatTypes["IEEE_SINGLE_PRECISION"];
         }
-        this.floatType = floatType;
+    }
+    get value()
+    {
+        try
+        {
+            return Decimal.mul(Decimal.pow(2, this.exp), this.mant).mul(this.sign).toString();
+        }
+        catch(err)
+        {
+            alert(err);
+            return new Decimal("NaN").toString();
+        }
     }
 
-    get sign()
+    extractMembersFromValue(value, typeChange)
     {
-        return Decimal.sign(this.raw);
-    }
+        try
+        {
+            if(typeChange === ValueChangeType.Raw)
+            {
+                var decValue = Decimal(value);
+            }
+            else if (typeChange === ValueChangeType.Value)
+            {
+                var mantValue = new Decimal(value);
+                var expValue = Decimal.floor(Decimal.log10(mantValue));
+                var signValue = Decimal.sign(value);
+                mantValue /= Decimal.pow(10, digitsFromSig);
 
-    get significand()
-    {
-        //return this.calcMantissa(number);
-    }
+                this.sign = signValue;
+                this.exp = expValue;
+                this.mant = mantValue;
+            }
+        }
+        catch(err)
+        {
 
-    get exponent()
-    {
-        return this.calcExponent(number);
-    }
-
-    get radix()
-    {
-        
+        }
     }
 
     get bias()
     {
+        return floatType.bias;
+    }
+
+    get ufl()
+    {
 
     }
-    
-    get precision()
+
+    get ofl()
+    {
+
+    }
+
+    get ulp()
     {
         
     }
 
-    get valueMax()
+    get relErr()
     {
 
     }
 
-    get valueMin()
-    {
-        
-    }
-
-    get eMin()
+    get machEps()
     {
 
-    }
-
-    get eMax()
-    {
-
-    }
-
-    get isSubnormal()
-    {
-
-    }
-
-    get binaryRep()
-    {
-
-    }
-
-    get hexRep()
-    {
-
-    }
-
-    static calcSignificand(number, radix)
-    {
-        /*
-            to calculate the significand:
-                1) convert the number to the base
-                2) shift the digits so the last digit is the only integer part
-                    ex: 123.95 in base 10 is shifted to 1.2395 for the mantissa
-                3) multiply 
-                    This is to make up for the decimal part floored in the
-                    exponent calculations:
-                        4^10 * 4^0.5 = 4^10.5
-                        4^10 * 2 = 4^10.5
-                        4^10 * 2^10/10 = 4^10.5
-                        (4 * 2^1/10)^10 = 4^10.5
-                        
-
-
-        */
-
-    }
-
-    static calcExponent(number, radix)
-    {
-        /*??????????
-            to calculate the exponent:
-                1) get the log for the number to the radix
-                        ex: 2^n will get you 8 (n is the no. of digits needed to
-                        represent 8-1)
-                2) multiply by the radix and????? the number of digits in front of
-                   the decimal point for the number
-                        4^4 = 2^8 = 2^(4 * (2 * 1))
-                        b100.0^10 = b10.0^1000
-                3) floor the result (ensures)
-        */
-        var trueExp = Decimal.log(number, radix);
-        var retExp = Decimal.floor(trueExp);
-        return retExp;
-    }
-
-    static calcULP(number, radix, widthMantisa)
-    {
-        /*
-            the Unit of Least Precision (ULP) of a floating point number is defined as:
-            (b-a)/w, where
-            a is closest number of the radix to the next smallest integral exponent
-                * a = r ^ floor(logr(n))
-                where:
-                    - r is the radix
-                    - n is the floating point number
-                    - logr(n) is the exponent e where r^e = n
-            b is closest number of the radix to the next largest integral exponent
-                * b = r ^ logr(a) + 1
-                where:
-                    - logr(a) + 1 is the exponent of floor(logr(n)) + 1
-            w is the radix raised to the number of digits available for the mantissa
-                * w = r ^ p
-                where:
-                    p is the number of representable digits (number of mantissa bits for base 2)
-
-            for the simulation, a lookup table will be used for decimal representation
-        */
-        expLow = this.calcExponent(number, radix);
-        expHigh = expHigh + 1;
-        b = Decimal.pow(radix, expHigh);
-        a = Decimal.pow(radix, expLow);
-        w = Decimal.pow(radix, widthMantisa);
-        numPrec = Decimal(b-a/w);
-        return numPrec;
-    }
-
-    modifyExponent()
-    {
-
-    }
-
-    modifyMantissa()
-    {
-
-    }
-
-    modifySign()
-    {
-
-    }
-
-    modifyRadix()
-    {
-
-    }
-
-    updateNumber(number)
-    {
-        this.raw = Decimal(number);
-    }
-
-    calcRaw(sign, significand, exponent)
-    {
-    }
-    
-    async send()
-    {
-        var retDict = {
-            "hex": number.toString(16),
-            "sign": this.sign,
-            "significand": this.significand,
-            "exponent": this.exponent,
-            "bias": this.bias,
-            "ufl": this,
-            "ofl": this,
-            "ulp": this,
-            "relerr": this,
-            "epsilon": this
-        };
-        return retDict;
     }
 }
 

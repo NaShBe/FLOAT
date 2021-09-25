@@ -43,17 +43,17 @@
                         </optgroup>
                     </select>
                     <p id="result">
-                        <span id ="sigsign" class="dsign" contenteditable="true">+</span
-                        ><span id="sigmant" class="dmantissa" contenteditable="true">1.00000</span
-                        >x2<sup><span id="sigexp" class="dexponent" contenteditable="true">0</span></sup>
+                        <span id ="sigsign" class="dsign">+</span
+                        >1.<span id="sigmant" class="dmantissa" contenteditable="true">24000</span
+                        >x2<sup><span id="sigexp" class="dexponent" contenteditable="true">2</span></sup>
                     </p>
                     <p id="hex">
-                        34DF3434<sub>16</sub>
+                        34DF3434<sub>hex</sub>
                     </p>
                     <p id="bin">
                         (<span id="binsign" class="dsign">1</span>
                         <span id="binexp" class="dexponent">1010</span>
-                        <span id="binmant" class="dmantissa">110</span><sub>2</sub>)
+                        <span id="binmant" class="dmantissa">110</span><sub>binary</sub>)
                     </p>
                     <div id="userinput" class="entries">
                         <form onsubmit="return false;">
@@ -66,15 +66,15 @@
                         </form>
                     </div>
                     <div class="details">
-                        <p>Sign: x</p>
-                        <p>Mantissa: x</p>
-                        <p>Biased Exponent: x</p>
-                        <p>Exponent: x</p>
-                        <p>UFL: x</p>
-                        <p>OFL: x</p>
-                        <p>ULP: x</p>
-                        <p>Relative Error: x</p>
-                        <p>Machine Epsilon: x</p>
+                        <p>Sign: <span id="signout">N/A</span></p>
+                        <p>Mantissa: <span id="mantout">N/A</span></p>
+                        <p>Biased Exponent: <span id="expbiasout">N/A</span></p>
+                        <p>Exponent: <span id="expout">N/A</span></p>
+                        <p>UFL: <span id="uflout">N/A</span></p>
+                        <p>OFL: <span id="oflout">N/A</span></p>
+                        <p>ULP: <span id="ulpout">N/A</span></p>
+                        <p>Relative Error: <span id="relerrout">N/A</span></p>
+                        <p>Machine Epsilon: <span id="machout">N/A</span></p>
                     </div>
                 </div>
             </main>
