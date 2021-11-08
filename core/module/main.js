@@ -74,6 +74,11 @@ function updateFloatFromSciNot()
     {
         signOutput.innerHTML = calcFloat.sign;
     }
+    let binReturn = calcFloat.extractBinary();
+    binSign.innerHTML = binReturn[0];
+    binExponent.innerHTML = binReturn[1];
+    binMantissa.innerHTML = binReturn[2];
+    hexRepresentation.innerHTML = binReturn[3];
 }
 
 document.getElementById("jsEnabled").style.display = "block"; // show interface if js enabled
@@ -81,6 +86,10 @@ document.getElementById("jsEnabled").style.display = "block"; // show interface 
 var signInput = document.getElementById("sigsign");
 var mantissaInput = document.getElementById("sigmant");
 var exponentInput = document.getElementById("sigexp");
+var binSign = document.getElementById("binsign");
+var binExponent = document.getElementById("binexp");
+var binMantissa = document.getElementById("binmant");
+var hexRepresentation = document.getElementById("hexrep");
 var formatInput = document.getElementById("encoding");
 
 var signOutput = document.getElementById("signout");
