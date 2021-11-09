@@ -64,7 +64,7 @@ function updateFloatRepresentation(value)
 
 function updateFloatFromSciNot()
 {
-    calcFloat = new FloatingPoint(signInput.innerHTML, "1." + mantissaInput.innerHTML, exponentInput.innerHTML, FloatTypes["IEEE_SINGLE_PRECISION"]);
+    calcFloat = new FloatingPoint(signInput.innerHTML, "1." + mantissaInput.innerHTML, exponentInput.innerHTML, FloatTypes[formatInput.value]);
     digitInput.value = calcFloat.value;
     if (calcFloat.sign.toString() == "NaN")
     {
@@ -79,6 +79,16 @@ function updateFloatFromSciNot()
     binExponent.innerHTML = binReturn[1];
     binMantissa.innerHTML = binReturn[2];
     hexRepresentation.innerHTML = binReturn[3];
+    if (binReturn[4].includes('R'))
+    {
+        // show indicator
+        rFlagIndicator.style.display = "inline";
+    }
+    else
+    {
+        // hide indicator
+        rFlagIndicator.style.display = "none";
+    }
 }
 
 document.getElementById("jsEnabled").style.display = "block"; // show interface if js enabled
@@ -93,6 +103,7 @@ var hexRepresentation = document.getElementById("hexrep");
 var formatInput = document.getElementById("encoding");
 
 var signOutput = document.getElementById("signout");
+var rFlagIndicator = document.getElementById("r_flag");
 
 signInput.addEventListener("click", flipSign);
 signInput.addEventListener("click", updateFloatFromSciNot);
@@ -100,6 +111,7 @@ mantissaInput.addEventListener("input", validateFloatInput);
 mantissaInput.addEventListener("input", updateFloatFromSciNot);
 exponentInput.addEventListener("input", validateFloatInput);
 exponentInput.addEventListener("input", updateFloatFromSciNot);
+formatInput.addEventListener("change", updateFloatFromSciNot)
 
 var digitInput = document.getElementById("dinput");
 

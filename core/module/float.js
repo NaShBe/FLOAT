@@ -8,11 +8,11 @@ export const ValueChangeType =
 
 export const FloatTypes =
 {
-    IEEE_HALF_PRECISION: {name: "float16", size: 16, mantRange: 10, expRang: 5, totalRange: 16, bias: 0xF},
-    IEEE_SINGLE_PRECISION: {name: "float32", size: 32, mantRange: 23, expRang: 8, totalRange: 32, bias: 0x7F},
-    IEEE_DOUBLE_PRECISION: {name: "float64", size: 64, mantRange: 52, expRang: 11, totalRange: 64, bias: 0x3FF},
-    IEEE_QUADRUPLE_PRECISION: {name: "float128", size: 128, mantRange: 112, expRang: 15, totalRange: 128, bias: 0x3FFF},
-    IEEE_OCTUPLE_PRECISION: {name: "float256", size: 256, mantRange: 236, expRang: 19, totalRange: 256, bias: 0x3FFFF}
+    IEEE_HALF_PRECISION: {name: "float16", size: 16, mantRange: 10, expRang: 5, bias: 0x0000000F},
+    IEEE_SINGLE_PRECISION: {name: "float32", size: 32, mantRange: 23, expRang: 8, bias: 0x0000007F},
+    IEEE_DOUBLE_PRECISION: {name: "float64", size: 64, mantRange: 52, expRang: 11, bias: 0x000003FF},
+    IEEE_QUADRUPLE_PRECISION: {name: "float128", size: 128, mantRange: 112, expRang: 15, bias: 0x00003FFF},
+    IEEE_OCTUPLE_PRECISION: {name: "float256", size: 256, mantRange: 236, expRang: 19, bias: 0x0003FFFF}
 }
 
 class BaseNumber
@@ -67,15 +67,18 @@ export class FloatingPoint
         let exponentOffset = 0;
         let exponentValue = 0;
         let mantissaValue = 0;
-        let binRep = ["", "", "N/A", "N/A"];
+        let binRep = ["", "", "N/A", "N/A", []];
+        let flags = []
         let hexRep = "N/A";
         try
         {
             let mantissaMax = Decimal.pow(2, this.format["mantRange"]);
             if (this.exp > this.format["bias"] + 1) {return binRep;}
             mantissaValue = Decimal.mul(this.mant.minus(1.0), mantissaMax);
+            if (mantissaValue.isNaN()) {return binRep;}
+            if (mantissaValue.mod(1) != 0) {flags += 'R'}
             mantissaValue = Decimal.floor(mantissaValue).toBinary().substring(2);
-            if (mantissaValue > mantissaMax) {return binRep;}
+            if (mantissaValue.length > this.format["mantRange"]) {return binRep;}
             mantissaValue = mantissaValue.padStart(this.format["mantRange"], "0");
             exponentOffset = this.format["mantRange"];
             exponentValue = this.exp.plus(this.format["bias"]).toBinary().substring(2);
@@ -86,12 +89,11 @@ export class FloatingPoint
                 {
                     let signVal = "+";
                     if (this.sign < 0) {signVal = "-";}
-                    return ["", "", binRep, signVal + "INFINITY"];
+                    return [signValue, exponentValue, mantissaValue, signVal + "INFINITY", flags];
                 }
-            if (this.exp == this.format["bias"] + 1) {hexRep = "NaN";}
+            if (this.exp == this.format["bias"] + 1){hexRep = "NaN";}
             else {hexRep = parseInt(binRep, 2).toString(16);}
-
-            return [signValue, exponentValue, mantissaValue, hexRep];
+            return [signValue, exponentValue, mantissaValue, hexRep, flags];
         }
         catch(err)
         {

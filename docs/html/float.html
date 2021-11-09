@@ -32,10 +32,10 @@
                     <label for="encoding">Encoding</label>
                     <select name="encoding" id="encoding">
                         <optgroup label="IEEE 754 Floating Point">
-                            <option value="IEEE754B32">Single-Precision IEEE754 Float (32-bit)</option>
-                            <option value="IEEE754B64">Double-Precision IEEE754 Float (64-bit)</option>
-                            <option value="IEEE754B128">Quad-Precision IEEE754 Float (128-bit)</option>
-                            <option value="IEEE754B128">Octo-Precision IEEE754 Float (256-bit)</option>
+                            <option value="IEEE_SINGLE_PRECISION">Single-Precision IEEE754 Float (32-bit)</option>
+                            <option value="IEEE_DOUBLE_PRECISION">Double-Precision IEEE754 Float (64-bit)</option>
+                            <option value="IEEE_QUADRUPLE_PRECISION">Quad-Precision IEEE754 Float (128-bit)</option>
+                            <option value="IEEE_OCTUPLE_PRECISION">Octo-Precision IEEE754 Float (256-bit)</option>
                         </optgroup>
                         <optgroup label="Minifloat">
                             <option value="MINIB8">8-bit minifloat</option>
@@ -46,6 +46,10 @@
                         <span id ="sigsign" class="dsign">+</span
                         >1.<span id="sigmant" class="dmantissa" contenteditable="true">24000</span
                         >x2<sup><span id="sigexp" class="dexponent" contenteditable="true">2</span></sup>
+                        <div class="tooltip">
+                            <img src="../resources/float/r_flag.png" id="r_flag">
+                            <span class="tooltiptext">This number cannot be represented accurately. The closest representation is used instead.</span>
+                        </div>
                     </p>
                     <p id="hex">
                         <span id="hexrep">34DF3434</span><sub>hex</sub>
