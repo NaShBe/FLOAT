@@ -1,4 +1,4 @@
-import { FloatingPoint, FloatTypes, ValueChangeType} from "./float.js";
+import { FloatingPoint, FloatEncodings, ValueChangeType} from "./module/float.js";
 
 const MIN_RADIX = 1;
 const MAX_RADIX = 36;
@@ -64,11 +64,11 @@ function updateFloatRepresentation(value)
 
 function updateFloatFromSciNot()
 {
-    calcFloat = new FloatingPoint(signInput.innerHTML, "1." + mantissaInput.innerHTML, exponentInput.innerHTML, FloatTypes[formatInput.value]);
+    calcFloat = new FloatingPoint(signInput.innerHTML, "1." + mantissaInput.innerHTML, exponentInput.innerHTML, FloatEncodings[formatInput.value]);
     digitInput.value = calcFloat.value;
     if (calcFloat.sign.toString() == "NaN")
     {
-        signOutput.innerHTML = "N/A";
+        signOutput.innerHTML = "NaN";
     }
     else
     {
@@ -79,6 +79,24 @@ function updateFloatFromSciNot()
     binExponent.innerHTML = binReturn[1];
     binMantissa.innerHTML = binReturn[2];
     hexRepresentation.innerHTML = binReturn[3];
+
+    let mantHex = parseInt(binReturn[2], 2).toString(16).toUpperCase();
+    let biasHex = parseInt(binReturn[1], 2).toString(16).toUpperCase();
+    let expHex = (parseInt(binReturn[1], 2) - calcFloat.bias).toString(16).toUpperCase();
+
+    // if (mantHex != "NAN"){mantHex = "0x" + mantHex}
+    // if (biasHex != "NAN"){biasHex = "0x" + biasHex}
+    // if (expHex != "NAN"){expHex = "0x" + expHex}
+
+    mantissaOutput.innerHTML = mantHex
+    expBiasOutput.innerHTML = biasHex
+    expOutput.innerHTML = expHex
+    ulpOutput.innerHTML = calcFloat.ulp
+    uflOutput.innerHTML = calcFloat.ufl
+    oflOutput.innerHTML = calcFloat.ofl
+    relErrOutput.innerHTML = calcFloat.relErr
+    machEpsOutput.innerHTML = calcFloat.machEps
+
     if (binReturn[4].includes('R'))
     {
         // show indicator
@@ -103,6 +121,14 @@ var hexRepresentation = document.getElementById("hexrep");
 var formatInput = document.getElementById("encoding");
 
 var signOutput = document.getElementById("signout");
+var mantissaOutput = document.getElementById("mantout");
+var expBiasOutput = document.getElementById("expbiasout");
+var expOutput = document.getElementById("expout");
+var uflOutput = document.getElementById("uflout");
+var oflOutput = document.getElementById("oflout");
+var ulpOutput = document.getElementById("ulpout");
+var relErrOutput = document.getElementById("relerrout");
+var machEpsOutput = document.getElementById("machout");
 var rFlagIndicator = document.getElementById("r_flag");
 
 signInput.addEventListener("click", flipSign);
